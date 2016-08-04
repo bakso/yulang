@@ -1,29 +1,29 @@
 'use strict';
 
-var fs = require('fs');
-var peg = require('pegjs');
+var YuLang = require('./lib/yulang');
+var Parser = YuLang.Parser;
+var Interpreter = YuLang.Interpreter;
+var onChange = YuLang.onChange;
 
-var file = './yulang.pegjs';
-var parser = peg.buildParser(fs.readFileSync(file, 'utf-8'));
-fs.watch(file, function (ev) {
-  console.log("yulang.pegjs changed!");
-  try {
-    parser = peg.buildParser(fs.readFileSync(file, 'utf-8'));
-    parse();
-  }catch(e){
-    console.log(e.stack);
-  }
-});
 let test = `
 let foo = 1
 while true {
-  if foo > 10 {
+  if foo > 100 {
     break;
   }
   foo = foo + 1
 }
+foo;
 `;
-parse();
-function parse() {
-  console.log(JSON.stringify(parser.parse(test), null, 4));
+
+run();
+onChange(run);
+
+function run() {
+  var ast = Parser.parse(test);
+  console.log('AST:')
+  console.log(JSON.stringify(ast, null, 4));
+  var it = new Interpreter(ast);
+  console.log('Result is:');
+  console.log(it.execute());
 }

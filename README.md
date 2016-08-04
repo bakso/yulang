@@ -2,7 +2,7 @@
 
 just a small toy language
 
-## syntax
+## Syntax
 
 ```
 let foo = 1
