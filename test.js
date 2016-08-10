@@ -8,6 +8,7 @@ var onChange = YuLang.onChange;
 let test = `
 let inc = 1
 let ret = 0
+let true = 1
 while true {
   if inc > 100 {
     break
