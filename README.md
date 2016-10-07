@@ -23,14 +23,16 @@ var Interpreter = YuLang.Interpreter;
 var onChange = YuLang.onChange;
 
 let test = `
-let foo = 1
+let inc = 1
+let ret = 0
 while true {
-  if foo > 100 {
-    break;
+  if inc > 100 {
+    break
   }
-  foo = foo + 1
+  ret = ret + inc
+  inc = inc + 1
 }
-foo;
+ret
 `;
 
 var ast = Parser.parse(test);

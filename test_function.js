@@ -6,16 +6,18 @@ var Interpreter = YuLang.Interpreter;
 var onChange = YuLang.onChange;
 
 let test = `
-let inc = 1
-let ret = 0
-while true {
-  if inc > 100 {
-    break
+let i = 1
+let end = 100
+let total = 0
+func add() {
+  if i <= end {
+    total = total + i
+    i = i+1
+    add()
   }
-  ret = ret + inc
-  inc = inc + 1
 }
-ret
+add()
+total
 `;
 
 run();
