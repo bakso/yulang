@@ -14,13 +14,11 @@ $ npm install yulang
 ## API
 
 ```javascript
-
 'use strict';
 
 var YuLang = require('./lib/yulang');
 var Parser = YuLang.Parser;
 var Interpreter = YuLang.Interpreter;
-var onChange = YuLang.onChange;
 
 let test = `
 let inc = 1
@@ -38,14 +36,19 @@ ret
 var ast = Parser.parse(test);
 console.log('AST:')
 console.log(JSON.stringify(ast, null, 4));
-var it = new Interpreter(ast);
-console.log('Result is:');
-console.log(it.execute());
+try {
+  var it = new Interpreter(ast);
+  console.log('Result is:');
+  console.log(it.execute());
+}catch(e) {
+  console.log(e.stack);
+}
 ```
 
-### ast
+### AST
 
 ```
+AST:
 {
     "type": "Program",
     "body": [
@@ -53,7 +56,7 @@ console.log(it.execute());
             "type": "VariableDeclarator",
             "id": {
                 "type": "Identifier",
-                "name": "foo"
+                "name": "inc"
             },
             "init": {
                 "type": "Literal",
@@ -62,10 +65,23 @@ console.log(it.execute());
             }
         },
         {
+            "type": "VariableDeclarator",
+            "id": {
+                "type": "Identifier",
+                "name": "ret"
+            },
+            "init": {
+                "type": "Literal",
+                "value": 0,
+                "raw": "0"
+            }
+        },
+        {
             "type": "WhileStatement",
             "condition": {
-                "type": "Identifier",
-                "name": "true"
+                "type": "Literal",
+                "value": true,
+                "raw": "true"
             },
             "body": {
                 "type": "BlockStatement",
@@ -73,27 +89,23 @@ console.log(it.execute());
                     {
                         "type": "IFStatement",
                         "test": {
-                            "type": "AssignmentExpression",
+                            "type": "BinaryExpression",
                             "operator": ">",
                             "left": {
                                 "type": "Identifier",
-                                "name": "foo"
+                                "name": "inc"
                             },
                             "right": {
                                 "type": "Literal",
-                                "value": 10,
-                                "raw": "10"
+                                "value": 100,
+                                "raw": "100"
                             }
                         },
                         "consequent": {
                             "type": "BlockStatement",
                             "body": [
                                 {
-                                    "type": "ExpressionStatement",
-                                    "expression": {
-                                        "type": "Identifier",
-                                        "name": "break"
-                                    }
+                                    "type": "BreakStatement"
                                 }
                             ]
                         }
@@ -105,14 +117,37 @@ console.log(it.execute());
                             "operator": "=",
                             "left": {
                                 "type": "Identifier",
-                                "name": "foo"
+                                "name": "ret"
                             },
                             "right": {
                                 "type": "BinaryExpression",
                                 "operator": "+",
                                 "left": {
                                     "type": "Identifier",
-                                    "name": "foo"
+                                    "name": "ret"
+                                },
+                                "right": {
+                                    "type": "Identifier",
+                                    "name": "inc"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "type": "ExpressionStatement",
+                        "expression": {
+                            "type": "AssignmentExpression",
+                            "operator": "=",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "inc"
+                            },
+                            "right": {
+                                "type": "BinaryExpression",
+                                "operator": "+",
+                                "left": {
+                                    "type": "Identifier",
+                                    "name": "inc"
                                 },
                                 "right": {
                                     "type": "Literal",
@@ -124,6 +159,13 @@ console.log(it.execute());
                     }
                 ]
             }
+        },
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "Identifier",
+                "name": "ret"
+            }
         }
     ]
 }
@@ -133,5 +175,5 @@ console.log(it.execute());
 
 ```
 Result is:
-101
+5050
 ```
