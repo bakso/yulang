@@ -21,16 +21,18 @@ var Parser = YuLang.Parser;
 var Interpreter = YuLang.Interpreter;
 
 let test = `
-let inc = 1
-let ret = 0
-while true {
-  if inc > 100 {
-    break
+func create() {
+  let i = 0
+  func inc() {
+    i = i + 1
+    print(i)
   }
-  ret = ret + inc
-  inc = inc + 1
+  return inc
 }
-ret
+let add = create()
+add() #print 1
+add() #print 2
+add() #print 3
 `;
 
 var ast = Parser.parse(test);
@@ -38,8 +40,7 @@ console.log('AST:')
 console.log(JSON.stringify(ast, null, 4));
 try {
   var it = new Interpreter(ast);
-  console.log('Result is:');
-  console.log(it.execute());
+  it.execute();
 }catch(e) {
   console.log(e.stack);
 }
