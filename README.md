@@ -54,118 +54,136 @@ AST:
     "type": "Program",
     "body": [
         {
-            "type": "VariableDeclarator",
+            "type": "FunctionDeclarationStatement",
             "id": {
                 "type": "Identifier",
-                "name": "inc"
+                "name": "create"
             },
-            "init": {
-                "type": "Literal",
-                "value": 1,
-                "raw": "1"
-            }
-        },
-        {
-            "type": "VariableDeclarator",
-            "id": {
-                "type": "Identifier",
-                "name": "ret"
-            },
-            "init": {
-                "type": "Literal",
-                "value": 0,
-                "raw": "0"
-            }
-        },
-        {
-            "type": "WhileStatement",
-            "condition": {
-                "type": "Literal",
-                "value": true,
-                "raw": "true"
-            },
+            "params": null,
             "body": {
                 "type": "BlockStatement",
                 "body": [
                     {
-                        "type": "IFStatement",
-                        "test": {
-                            "type": "BinaryExpression",
-                            "operator": ">",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "inc"
-                            },
-                            "right": {
-                                "type": "Literal",
-                                "value": 100,
-                                "raw": "100"
-                            }
+                        "type": "VariableDeclarator",
+                        "id": {
+                            "type": "Identifier",
+                            "name": "i"
                         },
-                        "consequent": {
+                        "init": {
+                            "type": "Literal",
+                            "value": 0,
+                            "raw": "0"
+                        }
+                    },
+                    {
+                        "type": "FunctionDeclarationStatement",
+                        "id": {
+                            "type": "Identifier",
+                            "name": "inc"
+                        },
+                        "params": null,
+                        "body": {
                             "type": "BlockStatement",
                             "body": [
                                 {
-                                    "type": "BreakStatement"
+                                    "type": "ExpressionStatement",
+                                    "expression": {
+                                        "type": "AssignmentExpression",
+                                        "operator": "=",
+                                        "left": {
+                                            "type": "Identifier",
+                                            "name": "i"
+                                        },
+                                        "right": {
+                                            "type": "BinaryExpression",
+                                            "operator": "+",
+                                            "left": {
+                                                "type": "Identifier",
+                                                "name": "i"
+                                            },
+                                            "right": {
+                                                "type": "Literal",
+                                                "value": 1,
+                                                "raw": "1"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "ExpressionStatement",
+                                    "expression": {
+                                        "type": "CallExpression",
+                                        "callee": {
+                                            "type": "Identifier",
+                                            "name": "print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "type": "Identifier",
+                                                "name": "i"
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
                     },
                     {
-                        "type": "ExpressionStatement",
-                        "expression": {
-                            "type": "AssignmentExpression",
-                            "operator": "=",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "ret"
-                            },
-                            "right": {
-                                "type": "BinaryExpression",
-                                "operator": "+",
-                                "left": {
-                                    "type": "Identifier",
-                                    "name": "ret"
-                                },
-                                "right": {
-                                    "type": "Identifier",
-                                    "name": "inc"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "type": "ExpressionStatement",
-                        "expression": {
-                            "type": "AssignmentExpression",
-                            "operator": "=",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "inc"
-                            },
-                            "right": {
-                                "type": "BinaryExpression",
-                                "operator": "+",
-                                "left": {
-                                    "type": "Identifier",
-                                    "name": "inc"
-                                },
-                                "right": {
-                                    "type": "Literal",
-                                    "value": 1,
-                                    "raw": "1"
-                                }
-                            }
+                        "type": "ReturnStatement",
+                        "argument": {
+                            "type": "Identifier",
+                            "name": "inc"
                         }
                     }
                 ]
             }
         },
         {
+            "type": "VariableDeclarator",
+            "id": {
+                "type": "Identifier",
+                "name": "add"
+            },
+            "init": {
+                "type": "CallExpression",
+                "callee": {
+                    "type": "Identifier",
+                    "name": "create"
+                },
+                "arguments": null
+            }
+        },
+        {
             "type": "ExpressionStatement",
             "expression": {
-                "type": "Identifier",
-                "name": "ret"
+                "type": "CallExpression",
+                "callee": {
+                    "type": "Identifier",
+                    "name": "add"
+                },
+                "arguments": null
+            }
+        },
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "CallExpression",
+                "callee": {
+                    "type": "Identifier",
+                    "name": "add"
+                },
+                "arguments": null
+            }
+        },
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "CallExpression",
+                "callee": {
+                    "type": "Identifier",
+                    "name": "add"
+                },
+                "arguments": null
             }
         }
     ]
