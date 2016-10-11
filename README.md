@@ -4,7 +4,7 @@ just a small toy language
 
 -------------------------
 
-# Example
+# Examples
 
 ## While
 
