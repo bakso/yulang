@@ -6,6 +6,14 @@ var Interpreter = YuLang.Interpreter;
 var onChange = YuLang.onChange;
 
 let test = `
+func factorial(n) {
+  if n <= 1 {
+    return 1
+  }
+  return factorial(n - 1) * n
+}
+print(factorial(5))
+
 let i = 1
 let end = 100
 let total = 0
@@ -17,7 +25,7 @@ func add() {
   }
 }
 add()
-total
+print(total)
 `;
 
 run();
@@ -29,8 +37,7 @@ function run() {
   console.log(JSON.stringify(ast, null, 4));
   try {
     var it = new Interpreter(ast);
-    console.log('Result is:');
-    console.log(it.execute());
+    it.execute();
   }catch(e) {
     console.log(e.stack);
   }

@@ -33,6 +33,14 @@ let add = create()
 add() #print 1
 add() #print 2
 add() #print 3
+
+func factorial(n) {
+  if n <= 1 {
+    return 1
+  }
+  return factorial(n - 1) * n
+}
+print(factorial(5)) #print 120
 `;
 
 var ast = Parser.parse(test);
@@ -185,6 +193,112 @@ AST:
                 },
                 "arguments": null
             }
+        },
+        {
+            "type": "FunctionDeclarationStatement",
+            "id": {
+                "type": "Identifier",
+                "name": "factorial"
+            },
+            "params": [
+                {
+                    "type": "Identifier",
+                    "name": "n"
+                }
+            ],
+            "body": {
+                "type": "BlockStatement",
+                "body": [
+                    {
+                        "type": "IFStatement",
+                        "test": {
+                            "type": "BinaryExpression",
+                            "operator": "<=",
+                            "left": {
+                                "type": "Identifier",
+                                "name": "n"
+                            },
+                            "right": {
+                                "type": "Literal",
+                                "value": 1,
+                                "raw": "1"
+                            }
+                        },
+                        "consequent": {
+                            "type": "BlockStatement",
+                            "body": [
+                                {
+                                    "type": "ReturnStatement",
+                                    "argument": {
+                                        "type": "Literal",
+                                        "value": 1,
+                                        "raw": "1"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "ReturnStatement",
+                        "argument": {
+                            "type": "BinaryExpression",
+                            "operator": "*",
+                            "left": {
+                                "type": "CallExpression",
+                                "callee": {
+                                    "type": "Identifier",
+                                    "name": "factorial"
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "BinaryExpression",
+                                        "operator": "-",
+                                        "left": {
+                                            "type": "Identifier",
+                                            "name": "n"
+                                        },
+                                        "right": {
+                                            "type": "Literal",
+                                            "value": 1,
+                                            "raw": "1"
+                                        }
+                                    }
+                                ]
+                            },
+                            "right": {
+                                "type": "Identifier",
+                                "name": "n"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "CallExpression",
+                "callee": {
+                    "type": "Identifier",
+                    "name": "print"
+                },
+                "arguments": [
+                    {
+                        "type": "CallExpression",
+                        "callee": {
+                            "type": "Identifier",
+                            "name": "factorial"
+                        },
+                        "arguments": [
+                            {
+                                "type": "Literal",
+                                "value": 5,
+                                "raw": "5"
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     ]
 }
@@ -198,4 +312,5 @@ Result is:
 1
 2
 3
+120
 ```
